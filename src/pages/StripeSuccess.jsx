@@ -7,6 +7,7 @@ export function StripeSuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
+  const orderCount = useStore((state) => state.orders.length);
   const createOrder = useStore((state) => state.createOrder);
   const clearCart = useStore((state) => state.clearCart);
   const [status, setStatus] = useState('loading');
@@ -91,8 +92,6 @@ export function StripeSuccess() {
       cancelled = true;
     };
   }, [clearCart, createOrder, navigate, sessionId]);
-
-  const orderCount = orders.length;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">

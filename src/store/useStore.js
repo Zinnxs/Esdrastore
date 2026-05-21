@@ -117,6 +117,13 @@ export const useStore = create(
 
         return order;
       },
+      updateOrderStatus: (orderId, status) => {
+        set((state) => ({
+          orders: state.orders.map((order) =>
+            order.id === orderId ? { ...order, status } : order,
+          ),
+        }));
+      },
       getCartSubtotal: () =>
         get().cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
     }),
