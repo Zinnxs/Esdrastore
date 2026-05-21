@@ -1,16 +1,16 @@
 export const products = [
   {
     id: 1,
-    name: 'Camiseta Essential Flow',
+    name: 'Cu do Esdras',
     price: 1,
     description:
       'Camiseta premium de algodão com caimento reto, toque macio e acabamento reforçado para uso diário.',
     categories: ['Camisetas'],
     sizes: ['P', 'M', 'G', 'GG'],
     colors: [
-      { name: 'Off White', hex: '#f8fafc' },
-      { name: 'Preto', hex: '#0f172a' },
-      { name: 'Terracota', hex: '#c2410c' },
+      { name: 'Bosta', hex: '#5e4708' },
+      { name: 'Hemorroida', hex: '#993202' },
+      { name: 'Gozado', hex: '#fcfce4' },
     ],
     image:
       'https://placehold.co/900x1100/f8fafc/0f172a?text=Camiseta+Essential+Flow',
