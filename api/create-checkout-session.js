@@ -45,6 +45,7 @@ export default async function handler(request, response) {
       mode: 'payment',
       customer_email: customer.email,
       line_items: lineItems,
+      payment_method_types: ['card'],
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['BR'],
