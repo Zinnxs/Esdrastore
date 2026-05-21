@@ -2,7 +2,7 @@ export const products = [
   {
     id: 1,
     name: 'Camiseta Essential Flow',
-    price: 89.9,
+    price: 1,
     description:
       'Camiseta premium de algodão com caimento reto, toque macio e acabamento reforçado para uso diário.',
     categories: ['Camisetas'],
