@@ -33,9 +33,6 @@ export function Header() {
           <NavLink to="/" className={linkClass} end>
             Home
           </NavLink>
-          <NavLink to="/login" className={linkClass}>
-            Login
-          </NavLink>
           <NavLink to="/catalogo" className={linkClass}>
             Catálogo
           </NavLink>
@@ -45,8 +42,8 @@ export function Header() {
           <NavLink to="/checkout" className={linkClass}>
             Checkout
           </NavLink>
-          <NavLink to="/admin" className={linkClass}>
-            Admin
+          <NavLink to="/login" className={linkClass}>
+            Usuário
           </NavLink>
         </nav>
 
@@ -83,17 +80,17 @@ export function Header() {
         <NavLink to="/" className={linkClass} end>
           Home
         </NavLink>
-        <NavLink to="/login" className={linkClass}>
-          Login
-        </NavLink>
         <NavLink to="/catalogo" className={linkClass}>
           Catálogo
+        </NavLink>
+        <NavLink to="/carrinho" className={linkClass}>
+          Carrinho
         </NavLink>
         <NavLink to="/checkout" className={linkClass}>
           Checkout
         </NavLink>
-        <NavLink to="/admin" className={linkClass}>
-          Admin
+        <NavLink to="/login" className={linkClass}>
+          Usuário
         </NavLink>
       </div>
     </header>

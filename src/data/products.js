@@ -13,7 +13,7 @@ export const products = [
       { name: 'Gozado', hex: '#fcfce4' },
     ],
     image:
-      'https://placehold.co/900x1100/f8fafc/0f172a?text=Camiseta+Essential+Flow',
+      'https://mega.ibxk.com.br/2017/08/18/18163740040676.jpg?ims=fit-in/800x500',
   },
   {
     id: 2,

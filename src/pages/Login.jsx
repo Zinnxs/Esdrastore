@@ -2,16 +2,6 @@ import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 
-const customerSeed = {
-  name: '',
-  email: '',
-};
-
-const adminSeed = {
-  email: 'admin@esdrasstore.com',
-  password: '',
-};
-
 export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,9 +9,7 @@ export function Login() {
   const login = useStore((state) => state.login);
   const clearSession = useStore((state) => state.logout);
 
-  const [mode, setMode] = useState('customer');
-  const [customerForm, setCustomerForm] = useState(customerSeed);
-  const [adminForm, setAdminForm] = useState(adminSeed);
+  const [customerForm, setCustomerForm] = useState({ name: '', email: '' });
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -31,44 +19,33 @@ export function Login() {
     }
   }, [location.state, navigate, role]);
 
-  const handleCustomerSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (customerForm.name.trim().length < 3) {
-      setError('Informe seu nome completo.');
+    const name = customerForm.name.trim();
+    const email = (customerForm.email || '').trim();
+
+    if (name.length < 1) {
+      setError('Informe seu nome.');
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerForm.email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Informe um e-mail válido.');
       return;
     }
 
-    login({
-      role: 'customer',
-      name: customerForm.name.trim(),
-      email: customerForm.email.trim(),
-    });
-
-    const from = location.state?.from || '/';
-    navigate(from, { replace: true });
-  };
-
-  const handleAdminSubmit = (event) => {
-    event.preventDefault();
-
-    if (adminForm.email.trim() !== 'admin@esdrasstore.com' || adminForm.password !== 'admin123') {
-      setError('Credenciais de admin inválidas.');
+    // Admin shortcut: name ADMIN + admin email
+    if (email.toLowerCase() === 'admin@esdrasstore.com' && name.toUpperCase() === 'ADMIN') {
+      login({ role: 'admin', name: 'ADMIN', email });
+      navigate('/admin', { replace: true });
       return;
     }
 
-    login({
-      role: 'admin',
-      name: 'Administrador',
-      email: adminForm.email.trim(),
-    });
-
-    navigate('/admin', { replace: true });
+    // Regular customer
+    login({ role: 'customer', name, email });
+    const from = location.state?.from || '/';
+    navigate(from, { replace: true });
   };
 
   const onLogout = () => {
@@ -83,98 +60,33 @@ export function Login() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Área de login</p>
-          <h1 className="mt-3 text-3xl font-black text-slate-950 sm:text-5xl">Entre como cliente ou admin</h1>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            Clientes entram para comprar. O admin entra para acompanhar e organizar os pedidos pagos.
-          </p>
+    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Área de login</p>
+        <h1 className="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">Entrar como usuário</h1>
+        <p className="mt-4 text-base leading-7 text-slate-600">Use seu nome e e-mail para acessar a loja. O admin pode usar nome <strong>ADMIN</strong> com o e-mail <strong>admin@esdrasstore.com</strong>.</p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setMode('customer')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                mode === 'customer' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-600'
-              }`}
-            >
-              Cliente público
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode('admin')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                mode === 'admin' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-600'
-              }`}
-            >
-              Admin
-            </button>
-          </div>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+          <Field
+            label="Nome"
+            value={customerForm.name}
+            onChange={(event) => setCustomerForm((current) => ({ ...current, name: event.target.value }))}
+            placeholder="Seu nome"
+          />
+          <Field
+            label="E-mail"
+            type="email"
+            value={customerForm.email}
+            onChange={(event) => setCustomerForm((current) => ({ ...current, email: event.target.value }))}
+            placeholder="voce@email.com"
+          />
 
-          <div className="mt-6 rounded-[28px] bg-slate-50 p-5 text-sm leading-6 text-slate-600">
-            <p className="font-semibold text-slate-900">Credenciais de teste do admin</p>
-            <p>Email: admin@esdrasstore.com</p>
-            <p>Senha: admin123</p>
-          </div>
-        </section>
-
-        <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
-          {mode === 'customer' ? (
-            <form onSubmit={handleCustomerSubmit} className="space-y-5">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Entrar como cliente</p>
-                <h2 className="mt-2 text-2xl font-bold text-slate-950">Comprar com acesso público</h2>
-              </div>
-              <Field
-                label="Nome"
-                value={customerForm.name}
-                onChange={(event) => setCustomerForm((current) => ({ ...current, name: event.target.value }))}
-                placeholder="Seu nome completo"
-              />
-              <Field
-                label="E-mail"
-                type="email"
-                value={customerForm.email}
-                onChange={(event) => setCustomerForm((current) => ({ ...current, email: event.target.value }))}
-                placeholder="voce@email.com"
-              />
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
-              >
-                Entrar e comprar
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleAdminSubmit} className="space-y-5">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Entrar como admin</p>
-                <h2 className="mt-2 text-2xl font-bold text-slate-950">Acessar painel de pedidos</h2>
-              </div>
-              <Field
-                label="E-mail"
-                type="email"
-                value={adminForm.email}
-                onChange={(event) => setAdminForm((current) => ({ ...current, email: event.target.value }))}
-                placeholder="admin@esdrasstore.com"
-              />
-              <Field
-                label="Senha"
-                type="password"
-                value={adminForm.password}
-                onChange={(event) => setAdminForm((current) => ({ ...current, password: event.target.value }))}
-                placeholder="Digite a senha"
-              />
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
-              >
-                Entrar no painel
-              </button>
-            </form>
-          )}
+          <button
+            type="submit"
+            className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white"
+          >
+            Entrar
+          </button>
 
           {error ? <p className="mt-4 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">{error}</p> : null}
 
@@ -185,7 +97,7 @@ export function Login() {
           >
             Limpar sessão local
           </button>
-        </section>
+        </form>
       </div>
     </div>
   );
