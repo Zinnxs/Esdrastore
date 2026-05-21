@@ -11,6 +11,10 @@ export function Header() {
   const cartCount = useStore((state) =>
     state.cart.reduce((count, item) => count + item.quantity, 0),
   );
+  const session = useStore((state) => state.session);
+  const logout = useStore((state) => state.logout);
+
+  const isLoggedIn = session.role === 'customer' || session.role === 'admin';
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
@@ -29,6 +33,9 @@ export function Header() {
           <NavLink to="/" className={linkClass} end>
             Home
           </NavLink>
+          <NavLink to="/login" className={linkClass}>
+            Login
+          </NavLink>
           <NavLink to="/catalogo" className={linkClass}>
             Catálogo
           </NavLink>
@@ -43,18 +50,41 @@ export function Header() {
           </NavLink>
         </nav>
 
-        <NavLink
-          to="/carrinho"
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-        >
-          <span>Carrinho</span>
-          <span className="rounded-full bg-white/15 px-2 py-0.5 text-xs">{cartCount}</span>
-        </NavLink>
+        <div className="flex items-center gap-2">
+          {isLoggedIn ? (
+            <div className="hidden items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 sm:flex">
+              <span>
+                {session.name || 'Usuário'} • {session.role === 'admin' ? 'Admin' : 'Cliente'}
+              </span>
+              <button type="button" onClick={logout} className="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4">
+                Sair
+              </button>
+            </div>
+          ) : (
+            <NavLink
+              to="/login"
+              className="hidden rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 sm:inline-flex"
+            >
+              Entrar
+            </NavLink>
+          )}
+
+          <NavLink
+            to="/carrinho"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+          >
+            <span>Carrinho</span>
+            <span className="rounded-full bg-white/15 px-2 py-0.5 text-xs">{cartCount}</span>
+          </NavLink>
+        </div>
       </div>
 
       <div className="flex gap-2 overflow-x-auto px-4 pb-4 md:hidden">
         <NavLink to="/" className={linkClass} end>
           Home
+        </NavLink>
+        <NavLink to="/login" className={linkClass}>
+          Login
         </NavLink>
         <NavLink to="/catalogo" className={linkClass}>
           Catálogo

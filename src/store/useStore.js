@@ -19,8 +19,31 @@ const buildCartItem = (product, size, color) => ({
 export const useStore = create(
   persist(
     (set, get) => ({
+      session: {
+        role: 'guest',
+        name: '',
+        email: '',
+      },
       cart: [],
       orders: [],
+      login: ({ role, name, email }) => {
+        set({
+          session: {
+            role,
+            name,
+            email,
+          },
+        });
+      },
+      logout: () => {
+        set({
+          session: {
+            role: 'guest',
+            name: '',
+            email: '',
+          },
+        });
+      },
       addToCart: ({ productId, size, color, quantity = 1 }) => {
         const product = findProductById(productId);
 
@@ -76,7 +99,7 @@ export const useStore = create(
         }));
       },
       clearCart: () => set({ cart: [] }),
-      createOrder: ({ customer, paymentMethod, total, items, id }) => {
+      createOrder: ({ customer, paymentMethod, total, items, id, paymentSessionId }) => {
         const order = {
           id: id ?? generateOrderId(),
           customer,
@@ -84,6 +107,7 @@ export const useStore = create(
           total,
           items,
           status: 'Pago',
+          paymentSessionId: paymentSessionId ?? null,
           createdAt: new Date().toISOString(),
         };
 
@@ -99,7 +123,7 @@ export const useStore = create(
     {
       name: 'esdras-store',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ cart: state.cart, orders: state.orders }),
+      partialize: (state) => ({ cart: state.cart, orders: state.orders, session: state.session }),
     },
   ),
 );

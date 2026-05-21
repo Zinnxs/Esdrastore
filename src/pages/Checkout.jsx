@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
-import { formatCurrency, generateOrderId } from '../utils/format';
+import { formatCurrency } from '../utils/format';
 
 const initialForm = {
   name: '',
@@ -28,54 +28,26 @@ const initialErrors = {
   state: '',
 };
 
-const paymentTabs = [
-  { id: 'pix', label: 'PIX' },
-  { id: 'card', label: 'Cartão de Crédito' },
-];
-
 export function Checkout() {
   const navigate = useNavigate();
   const cart = useStore((state) => state.cart);
   const subtotal = useStore((state) => state.getCartSubtotal());
-  const createOrder = useStore((state) => state.createOrder);
-  const clearCart = useStore((state) => state.clearCart);
+  const session = useStore((state) => state.session);
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState(initialErrors);
-  const [paymentMethod, setPaymentMethod] = useState('pix');
-  const [cardForm, setCardForm] = useState({ number: '', name: '', expiry: '', cvv: '' });
-  const [successMessage, setSuccessMessage] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
-    if (cart.length === 0 && !successMessage) {
-      setSuccessMessage('');
+    if (session.role === 'customer') {
+      setForm((current) => ({
+        ...current,
+        name: session.name || current.name,
+        email: session.email || current.email,
+      }));
     }
-  }, [cart.length, successMessage]);
-
-  useEffect(() => {
-    if (!successMessage) {
-      return undefined;
-    }
-
-    const timer = setTimeout(() => {
-      navigate('/');
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [navigate, successMessage]);
-
-  const total = useMemo(() => subtotal, [subtotal]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-  };
-
-  const handleCardChange = (event) => {
-    const { name, value } = event.target;
-    setCardForm((current) => ({ ...current, [name]: value }));
-  };
+  }, [session.email, session.name, session.role]);
 
   const validate = () => {
     const nextErrors = { ...initialErrors };
@@ -97,7 +69,23 @@ export function Checkout() {
     return Object.values(nextErrors).every((message) => message === '');
   };
 
-  const finalizeOrder = () => {
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (cart.length === 0 || isSubmitting) {
+      return;
+    }
+
+    const isValid = validate();
+    if (!isValid) {
+      return;
+    }
+
     const customer = {
       name: form.name.trim(),
       email: form.email.trim(),
@@ -113,47 +101,68 @@ export function Checkout() {
       },
     };
 
-    createOrder({
-      customer,
-      paymentMethod,
-      total,
-      items: cart,
-      id: generateOrderId(),
-    });
-    clearCart();
-    setIsProcessing(false);
-    setSuccessMessage('Pagamento aprovado e pedido enviado com sucesso. Você será redirecionado para a Home em instantes.');
-  };
+    try {
+      setIsSubmitting(true);
+      setApiError('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+      sessionStorage.setItem(
+        'esdras_stripe_checkout',
+        JSON.stringify({
+          customer,
+          items: cart,
+          total: subtotal,
+        }),
+      );
 
-    if (cart.length === 0 || isProcessing || successMessage) {
-      return;
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customer,
+          items: cart,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Não foi possível iniciar o checkout da Stripe.');
+      }
+
+      if (!data.url) {
+        throw new Error('A Stripe não retornou uma URL de checkout.');
+      }
+
+      window.location.assign(data.url);
+    } catch (error) {
+      setApiError(error.message || 'Falha ao iniciar o pagamento.');
+      setIsSubmitting(false);
     }
-
-    const valid = validate();
-    if (!valid) {
-      return;
-    }
-
-    setIsProcessing(true);
-    window.setTimeout(finalizeOrder, 900);
   };
-
-  const isCard = paymentMethod === 'card';
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Checkout</p>
-          <h1 className="mt-2 text-3xl font-black text-slate-950 sm:text-5xl">Complete seus dados e pague</h1>
+          <h1 className="mt-2 text-3xl font-black text-slate-950 sm:text-5xl">Pagamento seguro com Stripe</h1>
         </div>
         <Link to="/carrinho" className="text-sm font-semibold text-slate-600 underline decoration-slate-300 underline-offset-4">
           Revisar carrinho
         </Link>
       </div>
+
+      {session.role !== 'customer' ? (
+        <div className="mb-8 rounded-[28px] border border-amber-200 bg-amber-50 p-5 text-amber-900">
+          <p className="font-semibold">Você precisa entrar como cliente para finalizar a compra.</p>
+          <p className="mt-1 text-sm">Use a área de login para acessar como usuário público e continuar para o pagamento.</p>
+          <Link to="/login" className="mt-4 inline-flex rounded-full bg-amber-950 px-5 py-2 text-sm font-semibold text-white">
+            Ir para login
+          </Link>
+        </div>
+      ) : null}
 
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <form onSubmit={handleSubmit} className="space-y-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
@@ -173,63 +182,26 @@ export function Checkout() {
             </div>
           </div>
 
-          <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Forma de pagamento</p>
-            <div className="flex flex-wrap gap-2">
-              {paymentTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setPaymentMethod(tab.id)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                    paymentMethod === tab.id
-                      ? 'bg-slate-950 text-white shadow-glow'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+          <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Stripe Checkout</p>
+            <p className="mt-3 text-base leading-7 text-slate-600">
+              Você será redirecionado para a página segura da Stripe, onde poderá pagar com os métodos disponíveis na sua conta.
+            </p>
+            <p className="mt-3 text-sm text-slate-500">
+              Este fluxo substitui o pagamento falso e mantém a confirmação no retorno do Stripe.
+            </p>
           </div>
-
-          {isCard ? (
-            <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Cartão de Crédito</p>
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <CardField label="Número do cartão" name="number" value={cardForm.number} onChange={handleCardChange} placeholder="0000 0000 0000 0000" />
-                <CardField label="Nome no cartão" name="name" value={cardForm.name} onChange={handleCardChange} placeholder="Como está no cartão" />
-                <CardField label="Validade" name="expiry" value={cardForm.expiry} onChange={handleCardChange} placeholder="MM/AA" />
-                <CardField label="CVV" name="cvv" value={cardForm.cvv} onChange={handleCardChange} placeholder="123" />
-              </div>
-            </div>
-          ) : (
-            <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">PIX</p>
-              <div className="mt-4 grid gap-4 md:grid-cols-[180px_1fr] md:items-center">
-                <img src="/pix-qr.svg" alt="QR Code PIX" className="h-44 w-44 rounded-3xl border border-slate-200 bg-white p-3" />
-                <div className="space-y-3">
-                  <p className="text-base font-semibold text-slate-900">Escaneie o QR Code ou use a chave aleatória simulada.</p>
-                  <p className="text-sm leading-6 text-slate-600">
-                    O fluxo abaixo simula a aprovação imediata do PIX e registra o pedido no painel administrativo.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
 
           <button
             type="submit"
-            disabled={cart.length === 0 || isProcessing || !!successMessage}
+            disabled={cart.length === 0 || isSubmitting}
             className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-slate-400"
           >
-            {isCard ? 'Pagar e Finalizar' : 'Simular Pagamento Aprovado'}
+            {isSubmitting ? 'Redirecionando para a Stripe...' : 'Ir para pagamento seguro'}
           </button>
 
-          {successMessage ? (
-            <div className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
-              {successMessage}
-            </div>
+          {apiError ? (
+            <div className="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">{apiError}</div>
           ) : null}
         </form>
 
@@ -256,10 +228,10 @@ export function Checkout() {
 
             <div className="flex items-center justify-between border-t border-slate-200 pt-4 text-lg font-bold text-slate-950">
               <span>Total</span>
-              <span>{formatCurrency(total)}</span>
+              <span>{formatCurrency(subtotal)}</span>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-              Após o pagamento, o pedido entra automaticamente no painel administrativo com status <strong>Pago</strong>.
+              Após a aprovação no Stripe, você retorna para uma tela de confirmação e o pedido entra no painel administrativo.
             </div>
           </div>
         </aside>
@@ -282,22 +254,6 @@ function Field({ label, name, value, onChange, error, type = 'text', placeholder
         className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400"
       />
       {error ? <span className="mt-1 block text-xs font-medium text-rose-600">{error}</span> : null}
-    </label>
-  );
-}
-
-function CardField({ label, name, value, onChange, placeholder }) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-sm font-medium text-slate-600">{label}</span>
-      <input
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400"
-        required
-      />
     </label>
   );
 }

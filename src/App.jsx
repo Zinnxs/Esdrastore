@@ -6,18 +6,37 @@ import { Produto } from './pages/Produto';
 import { Carrinho } from './pages/Carrinho';
 import { Checkout } from './pages/Checkout';
 import { Admin } from './pages/Admin';
+import { Login } from './pages/Login';
+import { StripeSuccess } from './pages/StripeSuccess';
 import { NotFound } from './pages/NotFound';
+import { RequireRole } from './components/RequireRole';
 
 export function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
         <Route path="catalogo" element={<Catalogo />} />
         <Route path="produto/:id" element={<Produto />} />
         <Route path="carrinho" element={<Carrinho />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="admin" element={<Admin />} />
+        <Route path="stripe/sucesso" element={<StripeSuccess />} />
+        <Route
+          path="checkout"
+          element={
+            <RequireRole allowedRoles={[ 'customer', 'admin' ]}>
+              <Checkout />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="admin"
+          element={
+            <RequireRole allowedRoles={[ 'admin' ]}>
+              <Admin />
+            </RequireRole>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
