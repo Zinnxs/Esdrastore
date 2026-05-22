@@ -146,28 +146,28 @@ export function Checkout() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Checkout</p>
-          <h1 className="mt-2 text-3xl font-black text-slate-950 sm:text-5xl">Pagamento seguro com Stripe</h1>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Checkout</p>
+          <h1 className="mt-2 text-3xl font-black text-[#f8f1e3] sm:text-5xl">Pagamento seguro com Stripe</h1>
         </div>
-        <Link to="/carrinho" className="text-sm font-semibold text-slate-600 underline decoration-slate-300 underline-offset-4">
+        <Link to="/carrinho" className="text-sm font-semibold text-[#f2e7d5] underline decoration-[#c6ad7e] underline-offset-4">
           Revisar carrinho
         </Link>
       </div>
 
       {session.role !== 'customer' ? (
-        <div className="mb-8 rounded-[28px] border border-amber-200 bg-amber-50 p-5 text-amber-900">
+        <div className="mb-8 rounded-[28px] border border-[#c6ad7e]/30 bg-[#f2e7d5] p-5 text-[#111827]">
           <p className="font-semibold">Você precisa entrar como cliente para finalizar a compra.</p>
           <p className="mt-1 text-sm">Use a área de login para acessar como usuário público e continuar para o pagamento.</p>
-          <Link to="/login" className="mt-4 inline-flex rounded-full bg-amber-950 px-5 py-2 text-sm font-semibold text-white">
+          <Link to="/login" className="mt-4 inline-flex rounded-full bg-[#111827] px-5 py-2 text-sm font-semibold text-[#f8f1e3]">
             Ir para login
           </Link>
         </div>
       ) : null}
 
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
+        <form onSubmit={handleSubmit} className="space-y-6 rounded-[32px] border border-white/10 bg-[#111827] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Dados do comprador</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Dados do comprador</p>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               <Field label="Nome" name="name" value={form.name} onChange={handleChange} error={errors.name} />
               <Field label="E-mail" name="email" type="email" value={form.email} onChange={handleChange} error={errors.email} />
@@ -182,12 +182,12 @@ export function Checkout() {
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Stripe Checkout</p>
-            <p className="mt-3 text-base leading-7 text-slate-600">
+          <div className="rounded-[28px] border border-white/10 bg-[#0b1020] p-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Stripe Checkout</p>
+            <p className="mt-3 text-base leading-7 text-[#d8c8aa]">
               Você será redirecionado para a página segura da Stripe, onde poderá pagar com os métodos disponíveis na sua conta.
             </p>
-            <p className="mt-3 text-sm text-slate-500">
+            <p className="mt-3 text-sm text-[#c6ad7e]">
               Este fluxo substitui o pagamento falso e mantém a confirmação no retorno do Stripe.
             </p>
           </div>
@@ -195,42 +195,42 @@ export function Checkout() {
           <button
             type="submit"
             disabled={cart.length === 0 || isSubmitting}
-            className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-slate-400"
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#f2e7d5] px-6 py-4 text-sm font-semibold text-[#111827] transition disabled:cursor-not-allowed disabled:bg-[#5c5346] disabled:text-[#d8c8aa]"
           >
             {isSubmitting ? 'Redirecionando para a Stripe...' : 'Ir para pagamento seguro'}
           </button>
 
           {apiError ? (
-            <div className="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">{apiError}</div>
+            <div className="rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-200">{apiError}</div>
           ) : null}
         </form>
 
-        <aside className="h-fit rounded-[32px] border border-slate-200 bg-white p-6 shadow-glow sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Resumo final</p>
+        <aside className="h-fit rounded-[32px] border border-white/10 bg-[#171717] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Resumo final</p>
           <div className="mt-4 space-y-4">
             {cart.length > 0 ? (
               cart.map((item) => (
-                <div key={item.cartId} className="flex items-start justify-between gap-4 border-b border-slate-100 pb-3">
+                <div key={item.cartId} className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
                   <div>
-                    <p className="font-semibold text-slate-900">{item.name}</p>
-                    <p className="text-sm text-slate-500">
+                    <p className="font-semibold text-[#f8f1e3]">{item.name}</p>
+                    <p className="text-sm text-[#d8c8aa]">
                       {item.quantity}x • {item.size} • {item.color}
                     </p>
                   </div>
-                  <p className="font-semibold text-slate-900">{formatCurrency(item.price * item.quantity)}</p>
+                  <p className="font-semibold text-[#f8f1e3]">{formatCurrency(item.price * item.quantity)}</p>
                 </div>
               ))
             ) : (
-              <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
+              <div className="rounded-2xl border border-white/10 bg-[#0b1020] p-4 text-sm text-[#d8c8aa]">
                 O carrinho está vazio. Adicione produtos antes de concluir o pagamento.
               </div>
             )}
 
-            <div className="flex items-center justify-between border-t border-slate-200 pt-4 text-lg font-bold text-slate-950">
+            <div className="flex items-center justify-between border-t border-white/10 pt-4 text-lg font-bold text-[#f8f1e3]">
               <span>Total</span>
               <span>{formatCurrency(subtotal)}</span>
             </div>
-            <div className="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+            <div className="rounded-2xl border border-white/10 bg-[#0b1020] p-4 text-sm leading-6 text-[#d8c8aa]">
               Após a aprovação no Stripe, você retorna para uma tela de confirmação e o pedido entra no painel administrativo.
             </div>
           </div>
@@ -243,7 +243,7 @@ export function Checkout() {
 function Field({ label, name, value, onChange, error, type = 'text', placeholder, className = '', maxLength }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-2 block text-sm font-medium text-slate-600">{label}</span>
+      <span className="mb-2 block text-sm font-medium text-[#d8c8aa]">{label}</span>
       <input
         name={name}
         type={type}
@@ -251,9 +251,9 @@ function Field({ label, name, value, onChange, error, type = 'text', placeholder
         onChange={onChange}
         placeholder={placeholder}
         maxLength={maxLength}
-        className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400"
+        className="w-full rounded-2xl border border-white/10 bg-[#0b1020] px-4 py-3 text-[#f8f1e3] outline-none transition placeholder:text-[#8a7f72] focus:border-[#c6ad7e]"
       />
-      {error ? <span className="mt-1 block text-xs font-medium text-rose-600">{error}</span> : null}
+      {error ? <span className="mt-1 block text-xs font-medium text-rose-200">{error}</span> : null}
     </label>
   );
 }

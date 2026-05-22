@@ -102,6 +102,7 @@ export const useStore = create(
       createOrder: ({ customer, paymentMethod, total, items, id, paymentSessionId }) => {
         const order = {
           id: id ?? generateOrderId(),
+          customerEmail: customer?.email || '',
           customer,
           paymentMethod,
           total,

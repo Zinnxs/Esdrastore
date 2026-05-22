@@ -7,6 +7,7 @@ import { Carrinho } from './pages/Carrinho';
 import { Checkout } from './pages/Checkout';
 import { Admin } from './pages/Admin';
 import { Login } from './pages/Login';
+import { Pedidos } from './pages/Pedidos';
 import { StripeSuccess } from './pages/StripeSuccess';
 import { NotFound } from './pages/NotFound';
 import { RequireRole } from './components/RequireRole';
@@ -20,6 +21,14 @@ export function App() {
         <Route path="catalogo" element={<Catalogo />} />
         <Route path="produto/:id" element={<Produto />} />
         <Route path="carrinho" element={<Carrinho />} />
+        <Route
+          path="pedidos"
+          element={
+            <RequireRole allowedRoles={[ 'customer', 'admin' ]}>
+              <Pedidos />
+            </RequireRole>
+          }
+        />
         <Route path="stripe/sucesso" element={<StripeSuccess />} />
         <Route
           path="checkout"

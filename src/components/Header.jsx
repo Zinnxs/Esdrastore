@@ -42,6 +42,9 @@ export function Header() {
           <NavLink to="/checkout" className={linkClass}>
             Checkout
           </NavLink>
+          <NavLink to="/pedidos" className={linkClass}>
+            Pedidos
+          </NavLink>
           <NavLink to="/login" className={linkClass}>
             Usuário
           </NavLink>
@@ -88,6 +91,9 @@ export function Header() {
         </NavLink>
         <NavLink to="/checkout" className={linkClass}>
           Checkout
+        </NavLink>
+        <NavLink to="/pedidos" className={linkClass}>
+          Pedidos
         </NavLink>
         <NavLink to="/login" className={linkClass}>
           Usuário
