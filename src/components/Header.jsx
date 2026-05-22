@@ -4,8 +4,8 @@ import { useStore } from '../store/useStore';
 
 const linkClass = ({ isActive }) =>
   [
-    'rounded-full px-4 py-2 text-sm font-medium transition',
-    isActive ? 'bg-slate-900 text-white shadow-glow' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+    'nav-link',
+    isActive ? 'nav-link--active' : '',
   ].join(' ');
 
 export function Header() {
@@ -17,9 +17,18 @@ export function Header() {
 
   const isLoggedIn = session.role === 'customer' || session.role === 'admin';
 
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const initialTheme = savedTheme === 'light' ? 'light' : 'dark';
+
+    document.documentElement.dataset.theme = initialTheme;
+    document.documentElement.classList.toggle('light', initialTheme === 'light');
+
+    return initialTheme;
+  });
 
   useEffect(() => {
+    document.documentElement.dataset.theme = theme;
     if (theme === 'light') document.documentElement.classList.add('light');
     else document.documentElement.classList.remove('light');
     localStorage.setItem('theme', theme);
@@ -59,7 +68,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           {isLoggedIn ? (
-            <div className="hidden items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 sm:flex">
+            <div className="hidden items-center gap-3 rounded-full border px-4 py-2 text-sm sm:flex bg-[color:var(--surface)] text-[color:var(--text)]">
               <span>
                 {session.name || 'Usuário'} • {session.role === 'admin' ? 'Admin' : 'Cliente'}
               </span>
@@ -80,7 +89,7 @@ export function Header() {
             aria-label="Alternar tema claro/escuro"
             title={theme === 'dark' ? 'Mudar para claro' : 'Mudar para escuro'}
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            {theme === 'dark' ? 'CLARO' : 'ESCURO'}
           </button>
 
           <NavLink to="/carrinho" className="inline-flex items-center gap-2 btn-ghost">
