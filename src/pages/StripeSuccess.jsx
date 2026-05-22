@@ -100,10 +100,10 @@ export function StripeSuccess() {
   }, [clearCart, createOrder, sessionId]);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="rounded-2xl p-6 bg-white shadow-sm sm:p-8">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <section className="panel p-6 sm:p-8">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Stripe Checkout</p>
-        <h1 className="mt-3 text-3xl font-black text-[color:var(--text)] sm:text-5xl">
+        <h1 className="shop-title mt-3 sm:max-w-none">
           {status === 'success' ? 'Pagamento confirmado' : status === 'pending' ? 'Aguardando confirmação' : 'Falha no pagamento'}
         </h1>
 
@@ -119,7 +119,7 @@ export function StripeSuccess() {
             </div>
 
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-2xl p-4 bg-white shadow-sm">
+              <section className="panel-soft p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Dados do cliente</p>
                 <div className="mt-3 space-y-2 text-sm muted">
                   <p><span className="font-semibold text-[color:var(--text)]">Nome:</span> {orderSummary.customer?.name || 'N/D'}</p>
@@ -128,7 +128,7 @@ export function StripeSuccess() {
                 </div>
               </section>
 
-              <section className="rounded-2xl p-4 bg-white shadow-sm">
+              <section className="panel-soft p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Endereço de entrega</p>
                 <div className="mt-3 space-y-2 text-sm muted">
                   <p><span className="font-semibold text-[color:var(--text)]">Rua:</span> {orderSummary.customer?.address?.street || 'N/D'}, {orderSummary.customer?.address?.number || 'N/D'}</p>
@@ -140,21 +140,21 @@ export function StripeSuccess() {
               </section>
             </div>
 
-            <section className="rounded-2xl p-4 bg-white shadow-sm">
+            <section className="panel-soft p-4">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Itens do pedido</p>
               <div className="mt-4 space-y-3">
                 {orderSummary.items?.map((item) => (
-                  <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl p-3 sm:flex-row sm:items-center sm:justify-between bg-white shadow-sm">
+                  <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl bg-white p-3 sm:flex-row sm:items-center sm:justify-between shadow-sm">
                     <div className="flex items-center gap-3">
-                      <img src={item.image} alt={item.name} className="h-16 w-16 rounded-2xl object-cover" />
+                      <img src={item.image} alt={item.name} className="h-16 w-16 rounded-2xl bg-[#f2f0f1] object-contain p-2" />
                       <div>
-                        <p className="font-semibold text-[color:var(--text)]">{item.name}</p>
+                        <p className="font-semibold text-black">{item.name}</p>
                         <p className="text-sm muted">Tamanho {item.size} • Cor {item.color}</p>
                         <p className="text-sm muted">Qtd: {item.quantity}</p>
                       </div>
                     </div>
                     <div className="text-right text-sm muted">
-                      <p className="font-semibold text-[color:var(--text)]">{formatCurrency(item.price * item.quantity)}</p>
+                      <p className="font-semibold text-black">{formatCurrency(item.price * item.quantity)}</p>
                       <p>Preço unitário: {formatCurrency(item.price)}</p>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export function StripeSuccess() {
             </div>
           </div>
         ) : paymentInfo ? (
-          <div className="mt-6 grid gap-4 p-5 sm:grid-cols-3 bg-white rounded-2xl shadow-sm">
+          <div className="mt-6 grid gap-4 rounded-2xl bg-[#f2f0f1] p-5 sm:grid-cols-3">
             <SummaryCard label="Sessão" value={paymentInfo.id} />
             <SummaryCard label="Valor" value={typeof paymentInfo.amount_total === 'number' ? formatCurrency(paymentInfo.amount_total / 100) : 'N/D'} />
             <SummaryCard label="Status do pedido" value={status === 'success' ? 'Registrado no painel' : paymentInfo.payment_status} />
@@ -189,9 +189,9 @@ export function StripeSuccess() {
 
 function SummaryCard({ label, value }) {
   return (
-    <div className="rounded-2xl p-4 bg-white shadow-sm">
+    <div className="summary-card">
       <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">{label}</p>
-      <p className="mt-2 break-words text-sm font-semibold text-[color:var(--text)]">{value}</p>
+      <p className="mt-2 break-words text-sm font-semibold text-black">{value}</p>
     </div>
   );
 }

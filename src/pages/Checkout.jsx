@@ -143,17 +143,17 @@ export function Checkout() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Checkout</p>
-          <h1 className="mt-2 text-3xl font-black text-[color:var(--text)] sm:text-5xl">Pagamento seguro com Stripe</h1>
+          <h1 className="shop-title sm:max-w-none">Pagamento seguro com Stripe</h1>
         </div>
-        <Link to="/carrinho" className="text-sm font-semibold text-[color:var(--primary)] underline underline-offset-4">Revisar carrinho</Link>
+        <Link to="/carrinho" className="text-sm font-semibold text-black underline underline-offset-4">Revisar carrinho</Link>
       </div>
 
       {session.role !== 'customer' ? (
-        <div className="mb-8 rounded-2xl bg-white p-5">
+        <div className="panel mb-8 p-5">
           <p className="font-semibold">Você precisa entrar como cliente para finalizar a compra.</p>
           <p className="mt-1 text-sm">Use a área de login para acessar como usuário público e continuar para o pagamento.</p>
           <Link to="/login" className="mt-4 btn-primary inline-flex">Ir para login</Link>
@@ -161,7 +161,7 @@ export function Checkout() {
       ) : null}
 
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl p-6 bg-white shadow-sm sm:p-8">
+        <form onSubmit={handleSubmit} className="panel space-y-6 p-6 sm:p-8">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Dados do comprador</p>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -178,7 +178,7 @@ export function Checkout() {
             </div>
           </div>
 
-          <div className="rounded-2xl p-5 bg-white">
+          <div className="panel-soft p-5">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Stripe Checkout</p>
             <p className="mt-3 text-base leading-7 muted">
               Você será redirecionado para a página segura da Stripe, onde poderá pagar com os métodos disponíveis na sua conta.
@@ -193,24 +193,24 @@ export function Checkout() {
           {apiError ? <div className="rounded-2xl p-4 text-sm font-medium text-rose-700 bg-rose-100">{apiError}</div> : null}
         </form>
 
-        <aside className="h-fit rounded-2xl p-6 bg-white shadow-sm sm:p-8">
+        <aside className="panel h-fit p-6 sm:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Resumo final</p>
           <div className="mt-4 space-y-4">
             {cart.length > 0 ? (
               cart.map((item) => (
-                <div key={item.cartId} className="flex items-start justify-between gap-4 border-b pb-3">
+                <div key={item.cartId} className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
                   <div>
-                    <p className="font-semibold text-[color:var(--text)]">{item.name}</p>
+                    <p className="font-semibold text-black">{item.name}</p>
                     <p className="text-sm muted">{item.quantity}x • {item.size} • {item.color}</p>
                   </div>
-                  <p className="font-semibold text-[color:var(--text)]">{formatCurrency(item.price * item.quantity)}</p>
+                  <p className="font-semibold text-black">{formatCurrency(item.price * item.quantity)}</p>
                 </div>
               ))
             ) : (
-              <div className="rounded-2xl p-4 text-sm muted">O carrinho está vazio. Adicione produtos antes de concluir o pagamento.</div>
+              <div className="rounded-2xl bg-[#f2f0f1] p-4 text-sm muted">O carrinho está vazio. Adicione produtos antes de concluir o pagamento.</div>
             )}
 
-            <div className="flex items-center justify-between border-t pt-4 text-lg font-bold text-[color:var(--text)]">
+            <div className="flex items-center justify-between border-t border-black/10 pt-4 text-lg font-black text-black">
               <span>Total</span>
               <span>{formatCurrency(subtotal)}</span>
             </div>
@@ -233,7 +233,7 @@ function Field({ label, name, value, onChange, error, type = 'text', placeholder
         onChange={onChange}
         placeholder={placeholder}
         maxLength={maxLength}
-        className="w-full rounded-2xl border bg-white px-4 py-3 text-[color:var(--text)] outline-none transition"
+        className="shop-input"
       />
       {error ? <span className="mt-1 block text-xs font-medium text-rose-700">{error}</span> : null}
     </label>

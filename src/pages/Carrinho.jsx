@@ -11,61 +11,70 @@ export function Carrinho() {
   const subtotal = useStore((state) => state.getCartSubtotal());
 
   const totalItems = cart.reduce((count, item) => count + item.quantity, 0);
+  const discount = subtotal * 0.2;
+  const deliveryFee = cart.length > 0 ? 15 : 0;
+  const total = subtotal - discount + deliveryFee;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Carrinho</p>
-          <h1 className="mt-2 text-3xl font-black text-[color:var(--text)] sm:text-5xl">Revise seus itens</h1>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Cart</p>
+          <h1 className="shop-title sm:max-w-none">YOUR CART</h1>
         </div>
-        <p className="rounded-full bg-[color:var(--primary)] px-4 py-2 text-sm font-semibold text-white">{totalItems} item(ns)</p>
+        <p className="rounded-full bg-black px-4 py-2 text-sm font-semibold text-white">{totalItems} item(ns)</p>
       </div>
 
       {cart.length > 0 ? (
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             {cart.map((item) => (
-              <article key={item.cartId} className="flex flex-col gap-4 product-card p-4 sm:flex-row">
-                <img src={item.image} alt={item.name} className="h-32 w-full rounded-2xl object-cover sm:w-28" />
+              <article key={item.cartId} className="flex flex-col gap-4 panel p-4 sm:flex-row">
+                <div className="h-28 w-full rounded-[20px] bg-[#f2f0f1] p-3 sm:w-28">
+                  <img src={item.image} alt={item.name} className="h-full w-full object-contain" />
+                </div>
                 <div className="flex-1 space-y-3">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h2 className="text-lg font-semibold text-[color:var(--text)]">{item.name}</h2>
+                      <h2 className="text-lg font-black uppercase tracking-[-0.03em] text-black">{item.name}</h2>
                       <p className="text-sm muted">Tamanho {item.size} • Cor {item.color}</p>
                     </div>
-                    <p className="text-lg font-bold text-[color:var(--text)]">{formatCurrency(item.price * item.quantity)}</p>
+                    <button type="button" onClick={() => removeFromCart(item.cartId)} className="text-rose-500" aria-label="Remover item">
+                      🗑
+                    </button>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="inline-flex items-center rounded-full border bg-white">
-                      <button type="button" onClick={() => decrementCartItem(item.cartId)} className="px-4 py-2 text-sm font-semibold">-</button>
-                      <span className="min-w-12 px-4 py-2 text-center text-sm font-semibold">{item.quantity}</span>
-                      <button type="button" onClick={() => incrementCartItem(item.cartId)} className="px-4 py-2 text-sm font-semibold">+</button>
+                    <div className="shop-quantity">
+                      <button type="button" onClick={() => decrementCartItem(item.cartId)}>−</button>
+                      <span className="min-w-12 px-4 text-center text-sm font-semibold text-black">{item.quantity}</span>
+                      <button type="button" onClick={() => incrementCartItem(item.cartId)}>+</button>
                     </div>
-                    <button type="button" onClick={() => removeFromCart(item.cartId)} className="rounded-full bg-rose-100 px-4 py-2 text-sm font-semibold text-rose-700">
-                      Remover
-                    </button>
+                    <p className="text-lg font-black text-black">{formatCurrency(item.price * item.quantity)}</p>
                   </div>
                 </div>
               </article>
             ))}
           </div>
 
-          <aside className="h-fit rounded-2xl p-6 bg-white shadow-sm">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Resumo</p>
+          <aside className="panel h-fit p-6">
+            <p className="text-lg font-black uppercase tracking-[-0.04em] text-black">Order Summary</p>
             <div className="mt-4 space-y-4">
-              <div className="flex items-center justify-between muted">
+              <div className="flex items-center justify-between text-black/60">
                 <span>Subtotal</span>
                 <span className="font-semibold text-[color:var(--text)]">{formatCurrency(subtotal)}</span>
               </div>
-              <div className="flex items-center justify-between muted">
-                <span>Frete</span>
-                <span className="font-semibold muted">Calculado no checkout</span>
+              <div className="flex items-center justify-between text-[#ff5353]">
+                <span>Discount (-20%)</span>
+                <span className="font-semibold">-{formatCurrency(discount)}</span>
               </div>
-              <div className="flex items-center justify-between border-t pt-4 text-lg font-bold text-[color:var(--text)]">
+              <div className="flex items-center justify-between text-black/60">
+                <span>Delivery Fee</span>
+                <span className="font-semibold">{formatCurrency(deliveryFee)}</span>
+              </div>
+              <div className="flex items-center justify-between border-t border-black/10 pt-4 text-lg font-black text-black">
                 <span>Total</span>
-                <span>{formatCurrency(subtotal)}</span>
+                <span>{formatCurrency(total)}</span>
               </div>
             </div>
             <button type="button" onClick={() => navigate('/checkout')} className="mt-6 btn-primary w-full">
@@ -77,8 +86,8 @@ export function Carrinho() {
           </aside>
         </div>
       ) : (
-        <div className="rounded-2xl p-10 text-center bg-white shadow-sm">
-          <p className="text-2xl font-bold text-[color:var(--text)]">Seu carrinho está vazio.</p>
+        <div className="panel p-10 text-center">
+          <p className="text-2xl font-black text-black">Seu carrinho está vazio.</p>
           <p className="mt-2 muted">Adicione produtos do catálogo para iniciar a compra.</p>
           <Link to="/catalogo" className="mt-6 btn-primary inline-flex">
             Ver catálogo

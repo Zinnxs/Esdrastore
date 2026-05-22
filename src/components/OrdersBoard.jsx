@@ -4,9 +4,9 @@ import { useStore } from '../store/useStore';
 import { formatCurrency } from '../utils/format';
 
 const statusStyles = {
-  Pago: 'bg-emerald-500/15 text-emerald-200 border-emerald-400/30',
-  Separado: 'bg-amber-500/15 text-amber-200 border-amber-400/30',
-  Enviado: 'bg-cyan-500/15 text-cyan-200 border-cyan-400/30',
+  Pago: 'bg-[#ecfdf3] text-[#027a48] border-[#abefc6]',
+  Separado: 'bg-[#fff7ed] text-[#b54708] border-[#fed7aa]',
+  Enviado: 'bg-[#eff6ff] text-[#175cd3] border-[#b2ddff]',
 };
 
 export function OrdersBoard({ mode = 'customer' }) {
@@ -41,15 +41,15 @@ export function OrdersBoard({ mode = 'customer' }) {
     : 'Veja apenas os pedidos feitos com seu login e acompanhe o status de cada um.';
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <section className="rounded-2xl p-6 bg-white shadow-sm sm:p-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <section className="panel p-6 sm:p-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Pedidos</p>
-            <h1 className="mt-2 text-3xl font-black text-[color:var(--text)] sm:text-5xl">{title}</h1>
+            <h1 className="shop-title mt-2 sm:max-w-none">{title}</h1>
             <p className="mt-3 max-w-3xl text-base leading-7 muted">{subtitle}</p>
           </div>
-          <div className="rounded-3xl bg-white px-4 py-3 text-sm font-medium text-[color:var(--text)]">
+          <div className="rounded-3xl bg-[#f2f0f1] px-4 py-3 text-sm font-medium text-black">
             {mode === 'admin' ? 'Admin vê tudo' : session.email || 'Usuário não identificado'}
           </div>
         </div>
@@ -64,18 +64,18 @@ export function OrdersBoard({ mode = 'customer' }) {
         {visibleOrders.length > 0 ? (
           <div className="mt-8 space-y-4">
             {visibleOrders.map((order) => (
-              <details key={order.id} className="group rounded-2xl bg-white shadow-sm">
+              <details key={order.id} className="group panel">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Pedido {order.id}</p>
-                    <h2 className="mt-1 text-lg font-bold text-[color:var(--text)]">{order.customer?.name || 'Cliente'}</h2>
+                    <h2 className="mt-1 text-lg font-black uppercase tracking-[-0.03em] text-black">{order.customer?.name || 'Cliente'}</h2>
                     <p className="text-sm muted">{order.customer?.email || order.customerEmail || 'N/D'}</p>
                   </div>
                   <div className="flex flex-col items-end gap-2 text-right">
                     <span className={`inline-flex rounded-full border px-3 py-1 text-sm font-semibold ${statusStyles[order.status] || 'bg-gray-100 text-gray-700 border-gray-200'}`}>
                       {order.status || 'N/D'}
                     </span>
-                    <span className="text-lg font-bold text-[color:var(--text)]">{formatCurrency(order.total)}</span>
+                    <span className="text-lg font-black text-black">{formatCurrency(order.total)}</span>
                   </div>
                 </summary>
 
@@ -87,7 +87,7 @@ export function OrdersBoard({ mode = 'customer' }) {
                   </div>
 
                   <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                    <section className="rounded-2xl p-4 bg-white shadow-sm">
+                    <section className="panel-soft p-4">
                       <p className="text-sm font-semibold uppercase tracking-[0.25em] muted">Dados do cliente</p>
                       <div className="mt-3 space-y-2 text-sm">
                         <p><span className="font-semibold text-[color:var(--text)]">Nome:</span> {order.customer?.name || 'N/D'}</p>
@@ -96,7 +96,7 @@ export function OrdersBoard({ mode = 'customer' }) {
                       </div>
                     </section>
 
-                    <section className="rounded-2xl p-4 bg-white shadow-sm">
+                    <section className="panel-soft p-4">
                       <p className="text-sm font-semibold uppercase tracking-[0.25em] muted">Endereço de entrega</p>
                       <div className="mt-3 space-y-2 text-sm">
                         <p><span className="font-semibold text-[color:var(--text)]">CEP:</span> {order.customer?.address?.zip || 'N/D'}</p>
@@ -108,11 +108,11 @@ export function OrdersBoard({ mode = 'customer' }) {
                     </section>
                   </div>
 
-                  <section className="mt-5 p-4 bg-white rounded-2xl shadow-sm">
+                  <section className="mt-5 rounded-2xl bg-[#f2f0f1] p-4">
                     <p className="text-sm font-semibold uppercase tracking-[0.25em] muted">Itens comprados</p>
                     <div className="mt-3 space-y-3">
                       {order.items?.map((item) => (
-                        <div key={item.cartId} className="flex flex-col gap-3 bg-white p-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl bg-white p-3 sm:flex-row sm:items-center sm:justify-between shadow-sm">
                           <div className="flex items-center gap-3">
                             <img src={item.image} alt={item.name} className="h-14 w-14 rounded-2xl object-cover" />
                             <div>
@@ -129,7 +129,7 @@ export function OrdersBoard({ mode = 'customer' }) {
                   </section>
 
                   {mode === 'admin' ? (
-                    <section className="mt-5 p-4 bg-white rounded-2xl shadow-sm">
+                    <section className="mt-5 rounded-2xl bg-[#f2f0f1] p-4">
                       <p className="text-sm font-semibold uppercase tracking-[0.25em] muted">Ações rápidas</p>
                       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
                         <button type="button" onClick={() => updateOrderStatus(order.id, 'Separado')} className="btn-ghost">Marcar como separado</button>
@@ -138,7 +138,7 @@ export function OrdersBoard({ mode = 'customer' }) {
                       <p className="mt-3 text-sm muted">Situação atual: <span className="font-semibold text-[color:var(--text)]">{order.status}</span></p>
                     </section>
                   ) : (
-                    <section className="mt-5 p-4 bg-white rounded-2xl shadow-sm">
+                    <section className="mt-5 rounded-2xl bg-[#f2f0f1] p-4">
                       <p className="text-sm font-semibold uppercase tracking-[0.25em] muted">Situação do pedido</p>
                       <p className="mt-2 text-base font-semibold text-[color:var(--text)]">{order.status}</p>
                     </section>
@@ -148,8 +148,8 @@ export function OrdersBoard({ mode = 'customer' }) {
             ))}
           </div>
         ) : (
-          <div className="mt-6 p-10 text-center bg-white rounded-2xl shadow-sm">
-            <p className="text-xl font-bold text-[color:var(--text)]">Nenhum pedido disponível ainda.</p>
+          <div className="mt-6 panel p-10 text-center">
+            <p className="text-xl font-black text-black">Nenhum pedido disponível ainda.</p>
             <p className="mt-2 muted">{mode === 'admin' ? 'Finalize uma compra para ver todos os pedidos aqui.' : 'Faça um pedido para vê-lo neste painel.'}</p>
             {mode !== 'admin' ? (
               <Link to="/catalogo" className="mt-6 btn-primary inline-flex">Ir para o catálogo</Link>
@@ -163,18 +163,18 @@ export function OrdersBoard({ mode = 'customer' }) {
 
 function MetricCard({ label, value }) {
   return (
-    <div className="rounded-3xl border border-[#403a33] bg-[#111827] p-4 text-[#f2e7d5]">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c6ad7e]">{label}</p>
-      <p className="mt-2 text-2xl font-black text-[#f8f1e3]">{value}</p>
+    <div className="summary-card">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-black/55">{label}</p>
+      <p className="mt-2 text-2xl font-black text-black">{value}</p>
     </div>
   );
 }
 
 function InfoBlock({ label, value }) {
   return (
-    <div className="rounded-3xl bg-[#f2e7d5] p-4 text-[#111827]">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8a6f42]">{label}</p>
-      <p className="mt-2 break-all text-sm font-semibold text-[#111827]">{value}</p>
+    <div className="summary-card">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-black/55">{label}</p>
+      <p className="mt-2 break-all text-sm font-semibold text-black">{value}</p>
     </div>
   );
 }
