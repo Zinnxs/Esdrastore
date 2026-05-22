@@ -26,25 +26,25 @@ export function Catalogo() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <section className="space-y-6 rounded-[32px] border border-white/10 bg-[#111827] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
+      <section className="space-y-6 rounded-2xl p-6 bg-white shadow-sm sm:p-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Catálogo</p>
-            <h1 className="mt-2 text-3xl font-black text-[#f8f1e3] sm:text-5xl">Explore a coleção completa</h1>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Catálogo</p>
+            <h1 className="mt-2 text-3xl font-black text-[color:var(--text)] sm:text-5xl">Explore a coleção completa</h1>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-[#0b1020] px-4 py-3 text-sm font-medium text-[#d8c8aa]">
+          <div className="rounded-2xl bg-white px-4 py-3 text-sm font-medium text-[color:var(--text)]">
             {filteredProducts.length} produto(s) encontrados
           </div>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-[#d8c8aa]">Buscar por nome ou descrição</span>
+            <span className="mb-2 block text-sm font-medium muted">Buscar por nome ou descrição</span>
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Ex.: oversized, jeans, puffer..."
-              className="w-full rounded-2xl border border-white/10 bg-[#0b1020] px-4 py-3 text-[#f8f1e3] outline-none transition placeholder:text-[#8a7f72] focus:border-[#c6ad7e]"
+              className="w-full rounded-2xl border bg-white px-4 py-3 text-[color:var(--text)] outline-none transition placeholder:muted"
             />
           </label>
 
@@ -55,9 +55,7 @@ export function Catalogo() {
                 type="button"
                 onClick={() => setSelectedCategory(category)}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                  selectedCategory === category
-                    ? 'bg-[#f2e7d5] text-[#111827] shadow-glow'
-                    : 'bg-white/5 text-[#f2e7d5] hover:bg-white/10'
+                  selectedCategory === category ? 'btn-primary' : 'btn-ghost'
                 }`}
               >
                 {category}
@@ -75,9 +73,9 @@ export function Catalogo() {
             ))}
           </div>
         ) : (
-          <div className="rounded-[32px] border border-dashed border-white/20 bg-[#111827] p-10 text-center">
-            <p className="text-xl font-bold text-[#f8f1e3]">Nenhum produto encontrado.</p>
-            <p className="mt-2 text-[#d8c8aa]">Tente outra palavra-chave ou limpe o filtro de categoria.</p>
+          <div className="rounded-2xl border-dashed bg-white p-10 text-center">
+            <p className="text-xl font-bold text-[color:var(--text)]">Nenhum produto encontrado.</p>
+            <p className="mt-2 muted">Tente outra palavra-chave ou limpe o filtro de categoria.</p>
           </div>
         )}
       </section>

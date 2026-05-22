@@ -25,14 +25,10 @@ export function Produto() {
   if (!product) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="rounded-[32px] border border-white/10 bg-[#111827] p-10 text-center shadow-[0_30px_80px_rgba(15,23,42,0.35)]">
-          <p className="text-2xl font-bold text-[#f8f1e3]">Produto não encontrado.</p>
-          <p className="mt-3 text-[#d8c8aa]">Volte para o catálogo e escolha outro item.</p>
-          <button
-            type="button"
-            onClick={() => navigate('/catalogo')}
-            className="mt-6 inline-flex rounded-full bg-[#f2e7d5] px-6 py-3 text-sm font-semibold text-[#111827]"
-          >
+        <div className="rounded-2xl bg-white p-10 text-center shadow-md">
+          <p className="text-2xl font-bold text-[color:var(--text)]">Produto não encontrado.</p>
+          <p className="mt-3 muted">Volte para o catálogo e escolha outro item.</p>
+          <button type="button" onClick={() => navigate('/catalogo')} className="mt-6 btn-primary">
             Ir para o catálogo
           </button>
         </div>
@@ -53,36 +49,35 @@ export function Produto() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-4">
-        <Link to="/catalogo" className="text-sm font-semibold text-[#f2e7d5] underline decoration-[#c6ad7e] underline-offset-4">
+        <Link to="/catalogo" className="text-sm font-semibold text-[color:var(--primary)] underline underline-offset-4">
           Voltar ao catálogo
         </Link>
-        <p className="text-sm text-[#c6ad7e]">Produto #{product.id}</p>
+        <p className="text-sm muted">Produto #{product.id}</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="overflow-hidden rounded-[32px] border border-white/10 bg-[#171717] shadow-[0_30px_80px_rgba(15,23,42,0.35)]">
+        <div className="overflow-hidden rounded-2xl product-card">
           <img src={product.image} alt={product.name} className="h-full min-h-[420px] w-full object-cover" />
         </div>
 
-        <section className="space-y-6 rounded-[32px] border border-white/10 bg-[#111827] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
+        <section className="space-y-6 rounded-2xl p-6 bg-white shadow-sm sm:p-8">
           <div>
             <div className="flex flex-wrap gap-2">
               {product.categories.map((category) => (
-                <span key={category} className="rounded-full bg-[#f2e7d5] px-3 py-1 text-xs font-semibold text-[#111827]">
+                <span key={category} className="product-category">
                   {category}
                 </span>
               ))}
             </div>
-            <h1 className="mt-4 text-3xl font-black text-[#f8f1e3] sm:text-5xl">{product.name}</h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-[#d8c8aa]">{product.description}</p>
+            <h1 className="mt-4 text-3xl font-black text-[color:var(--text)] sm:text-5xl">{product.name}</h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 muted">{product.description}</p>
           </div>
-
-          <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-[#0b1020] p-5">
+          <div className="flex items-center justify-between rounded-2xl bg-white p-5">
             <div>
-              <p className="text-sm text-[#d8c8aa]">Preço</p>
-              <p className="text-3xl font-black text-[#f8f1e3]">{formatCurrency(product.price)}</p>
+              <p className="text-sm muted">Preço</p>
+              <p className="text-3xl font-black text-[color:var(--text)]">{formatCurrency(product.price)}</p>
             </div>
-            <p className="text-sm font-medium text-[#c6ad7e]">Frete calculado no checkout</p>
+            <p className="text-sm font-medium muted">Frete calculado no checkout</p>
           </div>
 
           <div>
@@ -93,11 +88,7 @@ export function Produto() {
                   key={size}
                   type="button"
                   onClick={() => setSelectedSize(size)}
-                  className={`h-12 min-w-12 rounded-2xl border px-4 text-sm font-semibold transition ${
-                    selectedSize === size
-                      ? 'border-[#f2e7d5] bg-[#f2e7d5] text-[#111827]'
-                      : 'border-white/10 bg-white/5 text-[#f2e7d5] hover:border-[#c6ad7e]'
-                  }`}
+                  className={`rounded-2xl px-4 py-3 text-sm font-semibold transition ${selectedSize === size ? 'bg-[color:var(--primary)] text-white' : 'btn-ghost'}`}
                 >
                   {size}
                 </button>
@@ -116,14 +107,9 @@ export function Produto() {
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(color.name)}
-                    className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
-                        selected ? 'border-[#f2e7d5] bg-[#f2e7d5] text-[#111827]' : 'border-white/10 bg-white/5 text-[#f2e7d5]'
-                    }`}
+                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${selected ? 'bg-[color:var(--primary)] text-white' : 'btn-ghost'}`}
                   >
-                    <span
-                      className="h-5 w-5 rounded-full border border-white/60"
-                      style={{ backgroundColor: color.hex }}
-                    />
+                    <span className="h-5 w-5 rounded-full border" style={{ backgroundColor: color.hex }} />
                     {color.name}
                   </button>
                 );
@@ -132,19 +118,8 @@ export function Produto() {
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="inline-flex items-center justify-center rounded-full bg-[#f2e7d5] px-6 py-3 text-sm font-semibold text-[#111827] transition hover:-translate-y-0.5"
-            >
-              Adicionar ao Carrinho
-            </button>
-            <Link
-              to="/carrinho"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-[#0b1020] px-6 py-3 text-sm font-semibold text-[#f8f1e3]"
-            >
-              Ir para o Carrinho
-            </Link>
+            <button type="button" onClick={handleAddToCart} className="btn-primary">Adicionar ao Carrinho</button>
+            <Link to="/carrinho" className="btn-ghost">Ir para o Carrinho</Link>
           </div>
 
           {feedback ? (

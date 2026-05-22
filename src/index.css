@@ -1,52 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  font-family: 'Space Grotesk', sans-serif;
-  background: #0f172a;
-  --theme-navy: #0f172a;
-  --theme-ink: #111827;
-  --theme-beige: #f2e7d5;
-  --theme-beige-soft: #fffaf0;
-  --theme-gold: #c6ad7e;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --bg: #f7f8fb;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --primary: #6C5CE7;
+  --accent: #00B894;
+  --glass: rgba(15, 23, 42, 0.04);
+  --card-shadow: 0 8px 30px rgba(17,24,39,0.06);
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-sans);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(198, 173, 126, 0.18), transparent 30%),
-    radial-gradient(circle at top right, rgba(37, 99, 235, 0.16), transparent 28%),
-    linear-gradient(180deg, #0f172a 0%, #111827 52%, #0b1020 100%);
-  color: #f2e7d5;
+  background: var(--bg);
+  color: var(--text);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
+button, input, textarea, select { font: inherit; }
+img { display: block; max-width: 100%; }
+#root { min-height: 100vh; }
 
-img {
-  display: block;
-  max-width: 100%;
-}
+/* Component styles inspired by the Figma template */
+@layer components {
+  .site-header { @apply sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200; }
 
-#root {
-  min-height: 100vh;
+  .brand-badge { @apply flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--primary)] to-indigo-500 text-lg font-bold text-white shadow; }
+
+  .nav-link { @apply rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100; }
+  .nav-link--active { @apply bg-[color:var(--primary)] text-white shadow; }
+
+  .btn-primary { @apply inline-flex items-center justify-center rounded-full bg-[color:var(--primary)] px-5 py-2 text-sm font-semibold text-white shadow-md hover:brightness-95; }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50; }
+
+  .cart-badge { @apply rounded-full bg-[color:var(--primary)] px-2 py-0.5 text-xs font-medium text-white; }
+
+  .product-card { @apply group overflow-hidden rounded-2xl border bg-[color:var(--surface)] shadow-md transition-transform hover:-translate-y-1; }
+  .product-image { @apply relative aspect-[4/5] overflow-hidden bg-gray-100; }
+  .product-category { @apply rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700; }
+  .product-cta { @apply inline-flex rounded-full bg-[color:var(--primary)] px-4 py-2 text-sm font-medium text-white; }
+
+  .muted { @apply text-gray-500; }
+  .price { @apply text-lg font-extrabold text-[color:var(--text)]; }
 }

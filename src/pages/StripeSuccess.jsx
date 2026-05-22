@@ -101,16 +101,16 @@ export function StripeSuccess() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="rounded-[32px] border border-white/10 bg-[#111827] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Stripe Checkout</p>
-        <h1 className="mt-3 text-3xl font-black text-[#f8f1e3] sm:text-5xl">
+      <section className="rounded-2xl p-6 bg-white shadow-sm sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Stripe Checkout</p>
+        <h1 className="mt-3 text-3xl font-black text-[color:var(--text)] sm:text-5xl">
           {status === 'success' ? 'Pagamento confirmado' : status === 'pending' ? 'Aguardando confirmação' : 'Falha no pagamento'}
         </h1>
 
-        <p className="mt-4 text-base leading-7 text-[#d8c8aa]">{message}</p>
+        <p className="mt-4 text-base leading-7 muted">{message}</p>
 
         {orderSummary ? (
-          <div className="mt-6 space-y-6 rounded-[28px] border border-white/10 bg-[#0b1020] p-5">
+          <div className="mt-6 space-y-6">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <SummaryCard label="Pedido" value={orderSummary.id} />
               <SummaryCard label="Cliente" value={orderSummary.customer?.name || 'N/D'} />
@@ -119,42 +119,42 @@ export function StripeSuccess() {
             </div>
 
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-[24px] border border-white/10 bg-[#111827] p-4 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c6ad7e]">Dados do cliente</p>
-                <div className="mt-3 space-y-2 text-sm text-[#d8c8aa]">
-                  <p><span className="font-semibold text-[#f8f1e3]">Nome:</span> {orderSummary.customer?.name || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">E-mail:</span> {orderSummary.customer?.email || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">CPF:</span> {orderSummary.customer?.cpf || 'N/D'}</p>
+              <section className="rounded-2xl p-4 bg-white shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Dados do cliente</p>
+                <div className="mt-3 space-y-2 text-sm muted">
+                  <p><span className="font-semibold text-[color:var(--text)]">Nome:</span> {orderSummary.customer?.name || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">E-mail:</span> {orderSummary.customer?.email || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">CPF:</span> {orderSummary.customer?.cpf || 'N/D'}</p>
                 </div>
               </section>
 
-              <section className="rounded-[24px] border border-white/10 bg-[#111827] p-4 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c6ad7e]">Endereço de entrega</p>
-                <div className="mt-3 space-y-2 text-sm text-[#d8c8aa]">
-                  <p><span className="font-semibold text-[#f8f1e3]">Rua:</span> {orderSummary.customer?.address?.street || 'N/D'}, {orderSummary.customer?.address?.number || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">Complemento:</span> {orderSummary.customer?.address?.complement || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">Bairro:</span> {orderSummary.customer?.address?.neighborhood || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">Cidade/UF:</span> {orderSummary.customer?.address?.city || 'N/D'} / {orderSummary.customer?.address?.state || 'N/D'}</p>
-                  <p><span className="font-semibold text-[#f8f1e3]">CEP:</span> {orderSummary.customer?.address?.zip || 'N/D'}</p>
+              <section className="rounded-2xl p-4 bg-white shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Endereço de entrega</p>
+                <div className="mt-3 space-y-2 text-sm muted">
+                  <p><span className="font-semibold text-[color:var(--text)]">Rua:</span> {orderSummary.customer?.address?.street || 'N/D'}, {orderSummary.customer?.address?.number || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">Complemento:</span> {orderSummary.customer?.address?.complement || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">Bairro:</span> {orderSummary.customer?.address?.neighborhood || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">Cidade/UF:</span> {orderSummary.customer?.address?.city || 'N/D'} / {orderSummary.customer?.address?.state || 'N/D'}</p>
+                  <p><span className="font-semibold text-[color:var(--text)]">CEP:</span> {orderSummary.customer?.address?.zip || 'N/D'}</p>
                 </div>
               </section>
             </div>
 
-            <section className="rounded-[24px] border border-white/10 bg-[#111827] p-4 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c6ad7e]">Itens do pedido</p>
+            <section className="rounded-2xl p-4 bg-white shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">Itens do pedido</p>
               <div className="mt-4 space-y-3">
                 {orderSummary.items?.map((item) => (
-                  <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-[#0b1020] p-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl p-3 sm:flex-row sm:items-center sm:justify-between bg-white shadow-sm">
                     <div className="flex items-center gap-3">
                       <img src={item.image} alt={item.name} className="h-16 w-16 rounded-2xl object-cover" />
                       <div>
-                        <p className="font-semibold text-[#f8f1e3]">{item.name}</p>
-                        <p className="text-sm text-[#d8c8aa]">Tamanho {item.size} • Cor {item.color}</p>
-                        <p className="text-sm text-[#d8c8aa]">Qtd: {item.quantity}</p>
+                        <p className="font-semibold text-[color:var(--text)]">{item.name}</p>
+                        <p className="text-sm muted">Tamanho {item.size} • Cor {item.color}</p>
+                        <p className="text-sm muted">Qtd: {item.quantity}</p>
                       </div>
                     </div>
-                    <div className="text-right text-sm text-[#d8c8aa]">
-                      <p className="font-semibold text-[#f8f1e3]">{formatCurrency(item.price * item.quantity)}</p>
+                    <div className="text-right text-sm muted">
+                      <p className="font-semibold text-[color:var(--text)]">{formatCurrency(item.price * item.quantity)}</p>
                       <p>Preço unitário: {formatCurrency(item.price)}</p>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export function StripeSuccess() {
             </div>
           </div>
         ) : paymentInfo ? (
-          <div className="mt-6 grid gap-4 rounded-[28px] border border-white/10 bg-[#0b1020] p-5 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 p-5 sm:grid-cols-3 bg-white rounded-2xl shadow-sm">
             <SummaryCard label="Sessão" value={paymentInfo.id} />
             <SummaryCard label="Valor" value={typeof paymentInfo.amount_total === 'number' ? formatCurrency(paymentInfo.amount_total / 100) : 'N/D'} />
             <SummaryCard label="Status do pedido" value={status === 'success' ? 'Registrado no painel' : paymentInfo.payment_status} />
@@ -177,15 +177,11 @@ export function StripeSuccess() {
         ) : null}
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <Link to="/admin" className="inline-flex items-center justify-center rounded-full bg-[#f2e7d5] px-6 py-3 text-sm font-semibold text-[#111827]">
-            Ver painel de pedidos
-          </Link>
-          <Link to="/catalogo" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-[#171717] px-6 py-3 text-sm font-semibold text-[#f8f1e3]">
-            Voltar ao catálogo
-          </Link>
+          <Link to="/admin" className="inline-flex items-center justify-center btn-primary">Ver painel de pedidos</Link>
+          <Link to="/catalogo" className="inline-flex items-center justify-center btn-ghost">Voltar ao catálogo</Link>
         </div>
 
-        <p className="mt-6 text-sm text-[#d8c8aa]">Pedidos registrados: {orderCount}.</p>
+        <p className="mt-6 text-sm muted">Pedidos registrados: {orderCount}.</p>
       </section>
     </div>
   );
@@ -193,9 +189,9 @@ export function StripeSuccess() {
 
 function SummaryCard({ label, value }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#111827] p-4 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c6ad7e]">{label}</p>
-      <p className="mt-2 break-words text-sm font-semibold text-[#f8f1e3]">{value}</p>
+    <div className="rounded-2xl p-4 bg-white shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] muted">{label}</p>
+      <p className="mt-2 break-words text-sm font-semibold text-[color:var(--text)]">{value}</p>
     </div>
   );
 }
