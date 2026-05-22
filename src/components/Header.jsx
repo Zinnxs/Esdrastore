@@ -89,7 +89,7 @@ export function Header() {
             aria-label="Alternar tema claro/escuro"
             title={theme === 'dark' ? 'Mudar para claro' : 'Mudar para escuro'}
           >
-            {theme === 'dark' ? 'CLARO' : 'ESCURO'}
+            {theme === 'dark' ? '☀️' : '🌑'}
           </button>
 
           <NavLink to="/carrinho" className="inline-flex items-center gap-2 btn-ghost">
