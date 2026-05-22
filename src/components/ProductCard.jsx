@@ -3,7 +3,7 @@ import { formatCurrency } from '../utils/format';
 
 export function ProductCard({ product }) {
   return (
-    <article className="product-card">
+    <article className="product-card group">
       <Link to={`/produto/${product.id}`} className="block">
         <div className="product-image">
           <img src={product.image} alt={product.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
