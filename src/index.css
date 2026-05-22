@@ -1,23 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  /* Default: dark theme */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --bg: #ffffff;
-  --surface: #f2f0f1;
-  --surface-strong: #ffffff;
-  --muted: #6b7280;
-  --text: #000000;
-  --primary: #000000;
-  --accent: #ff5353;
-  --star: #ffc107;
-  --glass: rgba(0, 0, 0, 0.04);
-  --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  --border: rgba(0, 0, 0, 0.08);
+  --bg: #071025; /* page background */
+  --surface: #0b1220; /* cards, header */
+  --muted: #94a3b8; /* subdued text */
+  --text: #e6eef8; /* main text */
+  --primary: #6C5CE7;
+  --accent: #00B894;
+  --glass: rgba(255,255,255,0.03);
+  --card-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  --border: rgba(255,255,255,0.06);
 }
 
 html {
@@ -33,64 +31,49 @@ body {
   color: var(--text);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  letter-spacing: -0.05em;
-}
-
 a { color: inherit; text-decoration: none; }
 
 button, input, textarea, select { font: inherit; }
 img { display: block; max-width: 100%; }
 #root { min-height: 100vh; }
 
+/* Component styles inspired by the Figma template */
 @layer components {
-  .site-header { @apply sticky top-0 z-50 bg-white; }
-  .top-promo { @apply flex h-8 items-center justify-center bg-black text-[11px] font-medium text-white; }
-  .header-row { @apply mx-auto flex max-w-7xl items-center gap-3 px-4 py-4 sm:px-6 lg:px-8; }
-  .header-nav { @apply hidden flex-1 items-center justify-center gap-2 xl:flex; }
-  .header-actions { @apply flex items-center gap-2; }
-  .brand-wordmark { @apply text-[28px] font-black uppercase leading-none tracking-[-0.07em] text-black; font-family: var(--font-display); }
-  .brand-mark { @apply text-[28px] font-black uppercase leading-none tracking-[-0.07em] text-black; font-family: var(--font-display); }
+  .site-header { @apply sticky top-0 z-50 backdrop-blur-sm; }
 
-  .nav-link { @apply rounded-full px-4 py-2 text-sm font-medium text-black transition hover:bg-black hover:text-white; }
-  .nav-link--active { @apply bg-black text-white; }
+  .brand-badge { @apply flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--primary)] to-indigo-500 text-lg font-bold text-white shadow; }
 
-  .search-box { @apply flex items-center gap-3 rounded-full bg-[#f2f0f1] px-4 py-3 text-sm text-black; }
-  .search-box input { @apply w-full bg-transparent outline-none placeholder:text-black/40; }
-  .icon-btn { @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-black transition hover:bg-black hover:text-white; }
+  .nav-link { @apply rounded-full px-4 py-2 text-sm font-medium transition; color: var(--text); }
+  .nav-link--active { @apply bg-[color:var(--primary)] text-white shadow; }
 
-  .btn-primary { @apply inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-black/90; }
-  .btn-ghost { @apply inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-black hover:text-white; }
+  .btn-primary { @apply inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold text-white shadow-md; background-color: var(--primary); }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm; border: 1px solid var(--border); color: var(--text); background: transparent; }
 
-  .cart-badge { @apply inline-flex min-w-6 items-center justify-center rounded-full bg-black px-2 py-1 text-[11px] font-semibold leading-none text-white; }
+  .cart-badge { @apply rounded-full px-2 py-0.5 text-xs font-medium text-white; background-color: var(--primary); }
 
-  .product-card { @apply overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)] transition-transform hover:-translate-y-0.5; }
-  .product-image { @apply flex items-center justify-center rounded-[22px] bg-[#f2f0f1] p-6; }
-  .product-category { @apply inline-flex rounded-full bg-[#f2f0f1] px-3 py-1 text-xs font-medium text-black; }
-  .product-cta { @apply inline-flex rounded-full bg-black px-4 py-2 text-sm font-medium text-white; }
+  /* 'group' is a state-class used on elements, don't @apply it — add 'group' in markup where needed */
+  .product-card { @apply overflow-hidden rounded-2xl border bg-[color:var(--surface)] shadow-md transition-transform hover:-translate-y-1; border-color: var(--border); }
+  .product-image { @apply relative aspect-[4/5] overflow-hidden; background-color: rgba(255,255,255,0.02); }
+  .product-category { @apply rounded-full px-3 py-1 text-xs font-semibold; background-color: rgba(255,255,255,0.03); color: var(--text); }
+  .product-cta { @apply inline-flex rounded-full bg-[color:var(--primary)] px-4 py-2 text-sm font-medium text-white; }
 
-  .panel { @apply rounded-[24px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)]; }
-  .panel-soft { @apply rounded-[24px] bg-[#f2f0f1]; }
   .muted { color: var(--muted); }
-  .price { @apply text-lg font-extrabold text-black; font-family: var(--font-display); }
-  .shop-title { @apply text-3xl font-black uppercase leading-[0.92] tracking-[-0.06em] text-black sm:text-5xl; }
-  .shop-subtitle { @apply text-sm leading-6 text-black/60 sm:text-base; }
-  .shop-chip { @apply inline-flex items-center justify-center rounded-full bg-[#f2f0f1] px-4 py-2 text-sm font-medium text-black transition; }
-  .shop-chip--active { @apply bg-black text-white; }
-  .shop-input { @apply w-full rounded-full border border-black/10 bg-[#f2f0f1] px-4 py-3 text-sm text-black outline-none transition placeholder:text-black/40 focus:border-black/40; }
-  .shop-swatch { @apply relative flex h-10 w-10 items-center justify-center rounded-full border border-black/20 transition; }
-  .shop-swatch--active { @apply border-black ring-2 ring-black/10; }
-  .shop-size { @apply inline-flex min-w-16 items-center justify-center rounded-full bg-[#f2f0f1] px-4 py-2 text-sm font-medium text-black transition; }
-  .shop-size--active { @apply bg-black text-white; }
-  .shop-quantity { @apply inline-flex items-center rounded-full bg-[#f2f0f1] p-1; }
-  .shop-quantity button { @apply inline-flex h-10 w-10 items-center justify-center rounded-full text-base font-semibold text-black transition hover:bg-white; }
-  .shop-tab { @apply inline-flex items-center justify-center border-b-2 border-transparent px-2 py-4 text-sm font-medium text-black/55 transition; }
-  .shop-tab--active { @apply border-black text-black; }
-  .review-card { @apply rounded-[20px] border border-black/10 bg-white p-5 shadow-[0_8px_20px_rgba(0,0,0,0.04)]; }
-  .summary-card { @apply rounded-[20px] bg-[#f2f0f1] p-4; }
-  .brand-strip { @apply bg-black py-7 text-white; }
-  .brand-strip__inner { @apply mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-4 sm:px-6 lg:px-8; }
-  .brand-strip__name { @apply text-2xl font-black uppercase tracking-[-0.06em] text-white; font-family: var(--font-display); }
-  .rating-star { color: var(--star); }
+  .price { @apply text-lg font-extrabold text-[color:var(--text)]; }
 }
+
+/* Light theme overrides */
+.light {
+  --bg: #f7f8fb;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --primary: #6C5CE7;
+  --accent: #00B894;
+  --glass: rgba(15, 23, 42, 0.04);
+  --card-shadow: 0 8px 30px rgba(17,24,39,0.06);
+  --border: rgba(15,23,42,0.06);
+}
+
+/* Use variables for element backgrounds */
+body { background: var(--bg); color: var(--text); }
+.site-header { background-color: var(--surface); border-bottom: 1px solid var(--border); }

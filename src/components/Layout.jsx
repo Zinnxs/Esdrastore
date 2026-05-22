@@ -3,20 +3,11 @@ import { Header } from './Header';
 
 export function Layout() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-[color:var(--bg)] text-[color:var(--text)]">
       <Header />
-      <main className="pb-10">
+      <main>
         <Outlet />
       </main>
-      <footer className="brand-strip">
-        <div className="brand-strip__inner">
-          <span className="brand-strip__name">VERSACE</span>
-          <span className="brand-strip__name">ZARA</span>
-          <span className="brand-strip__name">GUCCI</span>
-          <span className="brand-strip__name">PRADA</span>
-          <span className="brand-strip__name">Calvin Klein</span>
-        </div>
-      </footer>
     </div>
   );
 }

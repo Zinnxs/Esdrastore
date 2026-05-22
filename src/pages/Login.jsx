@@ -57,10 +57,10 @@ export function Login() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="panel p-6 sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Área de login</p>
-        <h1 className="shop-title mt-3 sm:max-w-none">Entrar como usuário</h1>
-        <p className="mt-4 text-base leading-7 muted">
+      <div className="rounded-[32px] border border-white/10 bg-[#111827] p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)] sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Área de login</p>
+        <h1 className="mt-3 text-3xl font-black text-[#f8f1e3] sm:text-4xl">Entrar como usuário</h1>
+        <p className="mt-4 text-base leading-7 text-[#d8c8aa]">
           Use seu nome e e-mail para acessar os pedidos. O admin também entra por aqui usando <strong>ADMIN</strong> e <strong>admin@esdrasstore.com</strong>.
         </p>
 
@@ -81,17 +81,17 @@ export function Login() {
 
           <button
             type="submit"
-            className="btn-primary w-full"
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#f2e7d5] px-6 py-3 text-sm font-semibold text-[#111827]"
           >
             Entrar
           </button>
 
-          {error ? <p className="mt-4 rounded-2xl bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-700">{error}</p> : null}
+          {error ? <p className="mt-4 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-200">{error}</p> : null}
 
           <button
             type="button"
             onClick={onLogout}
-            className="mt-4 btn-ghost w-full"
+            className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-[#0b1020] px-6 py-3 text-sm font-semibold text-[#f8f1e3]"
           >
             Limpar sessão local
           </button>
@@ -104,13 +104,13 @@ export function Login() {
 function Field({ label, type = 'text', value, onChange, placeholder }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-sm font-medium muted">{label}</span>
+      <span className="mb-2 block text-sm font-medium text-[#d8c8aa]">{label}</span>
       <input
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="shop-input"
+        className="w-full rounded-2xl border border-white/10 bg-[#0b1020] px-4 py-3 text-[#f8f1e3] outline-none transition placeholder:text-[#8a7f72] focus:border-[#c6ad7e]"
       />
     </label>
   );
