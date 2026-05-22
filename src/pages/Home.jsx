@@ -10,7 +10,7 @@ export function Home() {
       <section className="grid items-center gap-8 rounded-[36px] border border-slate-200 bg-white/85 p-6 shadow-glow backdrop-blur sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:p-14">
         <div className="space-y-6">
           <span className="inline-flex rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700">
-            Coleção 2026 • mobile first
+            Coleção 2026
           </span>
           <div className="space-y-4">
             <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-7xl">

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" role="img" aria-label="Camiseta fake 2">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7ed" />
+      <stop offset="100%" stop-color="#fed7aa" />
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c2d12" />
+      <stop offset="100%" stop-color="#431407" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)" />
+  <path d="M330 220h240l74 90-78 70v410H334V380l-78-70 74-90z" fill="#fdba74" opacity="0.32"/>
+  <path d="M334 220h232l54 64-56 48v418H336V332l-56-48 54-64z" fill="url(#shirt)" />
+  <path d="M393 220c18 42 41 64 57 64s39-22 57-64" fill="none" stroke="#ffedd5" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="670" cy="320" r="82" fill="#fb923c" opacity="0.18"/>
+  <circle cx="230" cy="850" r="140" fill="#fb923c" opacity="0.12"/>
+  <text x="450" y="970" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#7c2d12">Fake Clothing Photo</text>
+  <text x="450" y="1018" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#9a3412">Camiseta / mock local</text>
+</svg>

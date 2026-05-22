@@ -12,8 +12,7 @@ export const products = [
       { name: 'Hemorroida', hex: '#993202' },
       { name: 'Gozado', hex: '#fcfce4' },
     ],
-    image:
-      'https://mega.ibxk.com.br/2017/08/18/18163740040676.jpg?ims=fit-in/800x500',
+    image: '/mock-clothes/tee-01.svg',
   },
   {
     id: 2,
@@ -28,8 +27,7 @@ export const products = [
       { name: 'Areia', hex: '#f1c27d' },
       { name: 'Verde Militar', hex: '#4d6b57' },
     ],
-    image:
-      'https://placehold.co/900x1100/1e293b/f8fafc?text=Oversized+Night',
+    image: '/mock-clothes/tee-02.svg',
   },
   {
     id: 3,
@@ -44,8 +42,7 @@ export const products = [
       { name: 'Azul Petróleo', hex: '#155e75' },
       { name: 'Preto', hex: '#111827' },
     ],
-    image:
-      'https://placehold.co/900x1100/e2e8f0/0f172a?text=Rib+Minimal',
+    image: '/mock-clothes/hoodie.svg',
   },
   {
     id: 4,
@@ -60,8 +57,7 @@ export const products = [
       { name: 'Chumbo', hex: '#475569' },
       { name: 'Oliva', hex: '#556b2f' },
     ],
-    image:
-      'https://placehold.co/900x1100/111827/f8fafc?text=Calca+Cargo+Atlas',
+    image: '/mock-clothes/pants-01.svg',
   },
   {
     id: 5,
@@ -76,8 +72,7 @@ export const products = [
       { name: 'Azul Escuro', hex: '#1e3a8a' },
       { name: 'Preto', hex: '#111827' },
     ],
-    image:
-      'https://placehold.co/900x1100/dbeafe/1e3a8a?text=Jeans+Straight+Tide',
+    image: '/mock-clothes/pants-02.svg',
   },
   {
     id: 6,
@@ -92,8 +87,7 @@ export const products = [
       { name: 'Off White', hex: '#f8fafc' },
       { name: 'Marrom', hex: '#7c4a22' },
     ],
-    image:
-      'https://placehold.co/900x1100/fef3c7/7c4a22?text=Wide+Linen',
+    image: '/mock-clothes/pants-01.svg',
   },
   {
     id: 7,
@@ -108,8 +102,7 @@ export const products = [
       { name: 'Navy', hex: '#1e293b' },
       { name: 'Vinho', hex: '#7f1d1d' },
     ],
-    image:
-      'https://placehold.co/900x1100/0f172a/f8fafc?text=Puffer+North',
+    image: '/mock-clothes/coat-01.svg',
   },
   {
     id: 8,
@@ -124,8 +117,7 @@ export const products = [
       { name: 'Camel', hex: '#b7791f' },
       { name: 'Preto', hex: '#111827' },
     ],
-    image:
-      'https://placehold.co/900x1100/e5e7eb/111827?text=Wool+Blend+Urban',
+    image: '/mock-clothes/coat-02.svg',
   },
 ];
 

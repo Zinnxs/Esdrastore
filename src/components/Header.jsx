@@ -25,7 +25,7 @@ export function Header() {
           </span>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Esdras Store</p>
-            <p className="text-base font-semibold text-slate-900">Moda urbana mobile first</p>
+            <p className="text-base font-semibold text-slate-900">Moda urbana</p>
           </div>
         </NavLink>
 

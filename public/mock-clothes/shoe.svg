@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" role="img" aria-label="Peça fake">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5f3ff" />
+      <stop offset="100%" stop-color="#ddd6fe" />
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4c1d95" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)" />
+  <path d="M260 650c120-10 190-90 250-180 40-60 95-110 165-128l55 180c-60 12-110 49-140 96-42 66-112 122-206 140-52 10-104 14-144 12l20-120z" fill="url(#body)" />
+  <path d="M270 675c65 20 182 18 258-2 80-21 149-66 194-138" fill="none" stroke="#ddd6fe" stroke-width="16" stroke-linecap="round"/>
+  <path d="M512 350c24 18 55 42 85 78" fill="none" stroke="#c4b5fd" stroke-width="14" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="210" cy="230" r="100" fill="#8b5cf6" opacity="0.12"/>
+  <text x="450" y="970" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#312e81">Fake Clothing Photo</text>
+  <text x="450" y="1018" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#4c1d95">Mock local / fashion</text>
+</svg>

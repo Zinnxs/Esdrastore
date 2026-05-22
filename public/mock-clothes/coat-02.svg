@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" role="img" aria-label="Casaco fake 2">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fee2e2" />
+      <stop offset="100%" stop-color="#fecaca" />
+    </linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#991b1b" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)" />
+  <path d="M310 210h280l80 150-70 540H300l-70-540 80-150z" fill="url(#coat)" />
+  <path d="M388 210l62 98 62-98" fill="none" stroke="#fee2e2" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M450 308v430" stroke="#fee2e2" stroke-width="10" opacity="0.5"/>
+  <circle cx="170" cy="250" r="90" fill="#fff1f2" opacity="0.35"/>
+  <circle cx="700" cy="860" r="170" fill="#fff1f2" opacity="0.18"/>
+  <text x="450" y="970" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#7f1d1d">Fake Clothing Photo</text>
+  <text x="450" y="1018" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#991b1b">Casaco / mock local</text>
+</svg>

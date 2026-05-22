@@ -70,10 +70,13 @@ export function Admin() {
                     <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-400">Itens comprados</p>
                     <div className="mt-3 space-y-3">
                       {order.items.map((item) => (
-                        <div key={item.cartId} className="flex flex-col gap-1 rounded-2xl bg-white p-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-                          <div>
-                            <p className="font-semibold text-slate-950">{item.name}</p>
-                            <p className="text-sm text-slate-500">Tamanho {item.size} • Cor {item.color}</p>
+                        <div key={item.cartId} className="flex flex-col gap-3 rounded-2xl bg-white p-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex items-center gap-3">
+                            <img src={item.image} alt={item.name} className="h-14 w-14 rounded-2xl object-cover" />
+                            <div>
+                              <p className="font-semibold text-slate-950">{item.name}</p>
+                              <p className="text-sm text-slate-500">Tamanho {item.size} • Cor {item.color}</p>
+                            </div>
                           </div>
                           <div className="text-sm text-slate-600">
                             <span className="font-semibold text-slate-900">Qtd:</span> {item.quantity} • <span className="font-semibold text-slate-900">Subtotal:</span> {formatCurrency(item.price * item.quantity)}
