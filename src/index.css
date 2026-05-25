@@ -47,6 +47,11 @@ img { display: block; max-width: 100%; }
 
   .brand-badge { @apply flex h-11 w-11 items-center justify-center rounded-2xl text-lg font-bold shadow; background: linear-gradient(135deg, var(--primary), var(--accent) 55%, var(--highlight)); color: var(--primary-contrast); border: 2px solid var(--shadow-edge); box-shadow: 4px 4px 0 var(--shadow-edge); }
 
+  .brand-logo { width: 56px; height: 56px; object-fit: contain; border-radius: 8px; border: 2px solid var(--shadow-edge); box-shadow: 4px 4px 0 var(--shadow-edge); background: transparent; }
+  @media (max-width: 640px) {
+    .brand-logo { width: 44px; height: 44px; }
+  }
+
   .nav-link { @apply rounded-full px-4 py-2 text-sm font-medium transition; color: var(--text); border: 2px solid transparent; background: transparent; }
   .nav-link:hover { background: rgba(92, 123, 255, 0.16); border-color: rgba(92, 123, 255, 0.45); }
   .nav-link--active { background: var(--primary); color: var(--primary-contrast); border-color: var(--shadow-edge); box-shadow: 4px 4px 0 var(--shadow-edge); }

@@ -38,7 +38,7 @@ export function Header() {
     <header className="site-header">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <NavLink to="/" className="flex items-center gap-3">
-          <span className="brand-badge">X</span>
+          <img src="/logosfundo.png" alt="XLS" className="brand-logo" />
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">XLS</p>
             <p className="text-base font-semibold text-[color:var(--text)]">Neo-brutal streetwear</p>
