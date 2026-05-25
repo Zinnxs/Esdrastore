@@ -38,10 +38,10 @@ export function Header() {
     <header className="site-header">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <NavLink to="/" className="flex items-center gap-3">
-          <span className="brand-badge">E</span>
+          <span className="brand-badge">X</span>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">Esdras Store</p>
-            <p className="text-base font-semibold text-[color:var(--text)]">Moda urbana</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] muted">XLS</p>
+            <p className="text-base font-semibold text-[color:var(--text)]">Neo-brutal streetwear</p>
           </div>
         </NavLink>
 
@@ -85,11 +85,11 @@ export function Header() {
           <button
             type="button"
             onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-            className="btn-ghost"
+            className="btn-ghost min-w-24"
             aria-label="Alternar tema claro/escuro"
-            title={theme === 'dark' ? 'Mudar para claro' : 'Mudar para escuro'}
+            title={theme === 'dark' ? 'Mudar para tema solar' : 'Mudar para tema lunar'}
           >
-            {theme === 'dark' ? '☀️' : '🌑'}
+            {theme === 'dark' ? 'SOL' : 'LUA'}
           </button>
 
           <NavLink to="/carrinho" className="inline-flex items-center gap-2 btn-ghost">

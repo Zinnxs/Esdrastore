@@ -35,7 +35,9 @@ export function Login() {
       return;
     }
 
-    if (name.toUpperCase() === 'ADMIN' && email.toLowerCase() === 'admin@esdrasstore.com') {
+    const adminEmails = ['admin@xls.com', 'admin@esdrasstore.com'];
+
+    if (name.toUpperCase() === 'ADMIN' && adminEmails.includes(email.toLowerCase())) {
       login({ role: 'admin', name: 'ADMIN', email });
       navigate('/admin', { replace: true });
       return;
@@ -61,7 +63,7 @@ export function Login() {
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#c6ad7e]">Área de login</p>
         <h1 className="mt-3 text-3xl font-black text-[#f8f1e3] sm:text-4xl">Entrar como usuário</h1>
         <p className="mt-4 text-base leading-7 text-[#d8c8aa]">
-          Use seu nome e e-mail para acessar os pedidos. O admin também entra por aqui usando <strong>ADMIN</strong> e <strong>admin@esdrasstore.com</strong>.
+          Use seu nome e e-mail para acessar os pedidos. O admin também entra por aqui usando <strong>ADMIN</strong> e <strong>admin@xls.com</strong>.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">

@@ -1,7 +1,7 @@
 export const products = [
   {
     id: 1,
-    name: 'Cu do Esdras',
+    name: 'Camiseta Neon Core',
     price: 1,
     description:
       'Camiseta premium de algodão com caimento reto, toque macio e acabamento reforçado para uso diário.',

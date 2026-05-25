@@ -14,7 +14,7 @@ export function Home() {
           </span>
           <div className="space-y-4">
             <h1 className="text-4xl font-black tracking-tight text-[color:var(--text)] sm:text-5xl lg:text-7xl">
-              Moda urbana para comprar rápido, explorar fácil e finalizar sem fricção.
+              XLS mistura streetwear com estética neo-brutal, em um catálogo direto, agressivo e fácil de navegar.
             </h1>
             <p className="max-w-xl text-base leading-7 muted sm:text-lg">
               Catálogo real, filtros em tempo real, carrinho persistente e checkout integrado para navegar e comprar com segurança.
