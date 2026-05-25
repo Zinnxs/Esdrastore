@@ -89,7 +89,7 @@ export function Header() {
             aria-label="Alternar tema claro/escuro"
             title={theme === 'dark' ? 'Mudar para tema solar' : 'Mudar para tema lunar'}
           >
-            {theme === 'dark' ? 'SOL' : 'LUA'}
+            {theme === 'dark' ? '☀️' : '🌑'}
           </button>
 
           <NavLink to="/carrinho" className="inline-flex items-center gap-2 btn-ghost">
